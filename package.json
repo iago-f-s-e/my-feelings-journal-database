@@ -1,22 +1,21 @@
 {
-  "name": "my-mood-database",
+  "name": "my-feelings-journal",
   "version": "0.0.1",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
     "lint": "eslint '*/**/*.{js,ts}'",
-    "prepare": "husky install",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:prod": "node dist/main",
-    "test": "jest --passWithNoTests",
-    "test:watch": "jest --watch --coverage",
+    "make:migration": "chmod +x ./cmd/make-migration.sh && bash ./cmd/make-migration.sh",
+    "migration:gen": "yarn typeorm migration:generate -p -d src/database/cli/default-connection.ts",
+    "migration:run": "yarn typeorm migration:run -d src/database/cli/default-connection.ts",
+    "migration:rev": "yarn typeorm migration:revert -d src/database/cli/default-connection.ts",
     "type:check": "yarn tsc --noEmit",
-    "type:watch": "yarn tsc -w --noEmit"
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm:run": "yarn migration:run && yarn seeds:run"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
     "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.17"
   },
   "devDependencies": {
@@ -31,6 +30,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.3",
     "prettier": "^2.8.8",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.1.3"
   }
